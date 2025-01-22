@@ -1,0 +1,6 @@
+<!-- assignment 3: basic error handling -->
+<% if (title) { %>
+<h1 id="404_error_h1"><%= title %></h1>
+<% } else { res.redirect('/') } %>
+<!-- Message Block -->
+<p id="404_error_message"><%- message %></p>

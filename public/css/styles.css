@@ -96,18 +96,19 @@ header {
   text-decoration: none;
 }
 /* nav */
-nav {
+.nav_Class {
   background-color: var(--main_color);
-  color: var(--nav_button_text);
   display: grid;
-  grid-template-columns:repeat(5, 1fr);
+  grid-template-columns:repeat(6, 1fr);
   padding: 10px;
   text-align: center;
+  list-style-type: none;
 }
-nav a {
+.nav_Class a {
   color: var(--nav_button_text);
   text-decoration: none;
 }
+
 /* Main content */
 
 /* hero image */
