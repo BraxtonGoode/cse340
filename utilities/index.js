@@ -58,12 +58,37 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
 
+/* ***********************
+*Build vehicle Card via HTML
+* ************************** */ 
+Util.buildVehicleCard = async function(data){
+  let card
+  if(data.length > 0){
+    card = `<div class='inv_grid'>`
+    data.forEach(v => {
+      card += `<div id="v_img"> <img src='${v.inv_image}' alt='${v.inv_make} ${v.inv_model}'></div>`
+      card += '<ul id="inv-card">'
+      card += `<li><h3> ${v.inv_make} ${v.inv_model} Details:</h3></li>`
+      card += `<li><p><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(v.inv_price)}</li>`
+      card += `<li><p><strong>Description:</strong> ${v.inv_description}</p></li>`
+      card += `<li><p><strong>Color:</strong> ${v.inv_color}</p></li>`
+      card += `<li><p><strong>Mileage:</strong> ${v.inv_miles.toLocaleString()}</p></li>`
+      card += '</ul>'
+    })
+    card += `</div>`
+  } else { 
+    card += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return card
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 
 
 
