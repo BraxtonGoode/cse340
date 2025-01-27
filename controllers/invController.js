@@ -31,6 +31,7 @@ invCont.buildByInvId = async function (req, res, next) {
     const vYear = data[0].inv_year
     const vMake = data[0].inv_make
     const vModel = data[0].inv_model
+    // think isssue was capital I on file
     res.render("./inventory/item", {
       title: `${vYear} ${vMake} ${vModel}`,
       nav,
