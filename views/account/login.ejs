@@ -1,0 +1,46 @@
+<!-- Learning activity: Login View -->
+<!-- Login section -->
+<section class="login_Section">
+  <% if (title) { %>
+  <h1 id="login_h1"><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <!-- incase of a Flash message -->
+  <%- messages() %>
+  <!-- if additional errors are needed -->
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+  <!-- Message Block -->
+  <form class="login_Form" action="/account/login" method="post">
+    <fieldset id="login_Fieldset">
+      <label for="account_email">Email: </label><br />
+      <input
+        type="email"
+        name="account_email"
+        id="account_email"
+        required
+        value="<%= locals.account_email %>"
+      />
+      <br />
+      <label for="account_password">Password:</label><br />
+      <input
+        type="password"
+        name="account_password"
+        id="account_password"
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        title="Password must be at least 12 characters, contain at least one capital letter, one number, and one special character."
+      /><br />
+      <div>
+        Password must be at least 12 characters, <br />contain at least one
+        capital letter, <br />one number, and one special character.
+      </div>
+    </fieldset>
+    <input type="submit" value="Submit" />
+    <p>No account? <a href="/account/register">Sign-up</a></p>
+  </form>
+</section>

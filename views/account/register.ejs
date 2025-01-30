@@ -1,0 +1,62 @@
+<!-- Learning activity: Register View -->
+<!-- Register section -->
+<section class="register_Section">
+  <% if (title) { %>
+  <h1 id="register_h1"><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <!-- incase of a Flash message -->
+  <%- messages() %>
+  <!-- if additional errors are needed -->
+  <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+  <!-- Message Block -->
+  <form class="register_Form" action="/account/register" method="post">
+    <fieldset id="register_Fieldset">
+      <label for="account_firstname">First Name: </label> <br />
+      <input
+        type="text"
+        name="account_firstname"
+        id="account_firstname"
+        required
+      />
+      <br />
+      <label for="account_lastname">Last Name:</label> <br />
+      <input
+        type="text"
+        name="account_lastname"
+        id="account_lastname"
+        required
+      />
+      <br />
+      <label for="account_email">Email Address: </label><br />
+      <input
+        type="email"
+        name="account_email"
+        id="account_email"
+        required
+        placeholder="Enter a valid email address"
+      />
+      <br />
+      <label for="account_password">Password: </label><br />
+      <input
+        type="password"
+        name="account_password"
+        id="account_password"
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        title="Password must be at least 12 characters, contain at least one capital letter, one number, and one special character."
+      /><br />
+      <div>
+        Password must be at least 12 characters, <br />contain at least one
+        capital letter, <br />one number, and one special character.
+      </div>
+      <span id="passButton">Show Password</span>
+    </fieldset>
+    <input type="submit" value="Register" />
+  </form>
+</section>

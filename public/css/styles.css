@@ -269,6 +269,46 @@ color: black;
   padding: 10px;
   
 }
+/* Login View & Registration View*/
+.login_Section, .register_Section {
+  grid-column: 1/3;
+  grid-row: 1/3;
+  justify-items: center;
+  margin-bottom: 10px;
+}
+.login_Form, .register_Form{
+  border: 3px solid var(--main_color);
+  width: fit-content;
+  padding: 10px;
+}
+.login_Form label, .login_Form input, .register_Form label, .register_Form input{
+  display: block;
+
+}
+.login_Form p {
+  text-align: center;
+}
+#login_Fieldset , #register_Fieldset{
+  border: none;
+}
+input[type=submit] {
+  margin: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#passButton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid var(--accent_color);
+  border-radius: 5px;
+  padding: 2px;
+  margin-top: 1em;
+  font-size: small;
+  width: 7em;
+  text-align: center;
+}
 /* Error 404 & lost content*/
 .error_Section {
   display: flex;
