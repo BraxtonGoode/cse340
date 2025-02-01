@@ -6,7 +6,6 @@ const Util = {}
 ****************** */
 Util.getNav = async function(req, res, next) {
     let data = await inv_Model.getClassifications()
-    // console.log(data)
     let list = "<ul class='nav_Class'>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
     data.rows.forEach((row) => {
@@ -107,7 +106,7 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-module.exports = Util
+
 
 /* ****************************************
  * Middleware For Handling Errors

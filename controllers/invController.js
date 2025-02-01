@@ -13,9 +13,11 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id);
   const grid = await utilities.buildClassificationGrid(data);
   let nav = await utilities.getNav();
-  const className = data[0].classification_name;
+
+  const className = data[0].classification_name
+  
   res.render("./inventory/classification", {
-    title: className + " vehicles",
+    title: className +" Vehicles" ,
     nav,
     grid,
   });
@@ -151,7 +153,6 @@ invCont.addInventory = async function (req, res, next) {
     inv_color,);
 
   let nav = await utilities.getNav();
-  console.log("test1")
   if (invResult) {
     req.flash("notice", `Congratulations, You have added a new Inventory item`);
     console.log("added Item");
@@ -190,4 +191,5 @@ invCont.addInventory = async function (req, res, next) {
     });
   }
 };
+
 module.exports = invCont;
