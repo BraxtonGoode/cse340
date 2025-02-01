@@ -9,18 +9,39 @@ const invCont = {};
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId;
-  const data = await invModel.getInventoryByClassificationId(classification_id);
-  const grid = await utilities.buildClassificationGrid(data);
-  let nav = await utilities.getNav();
+  try {
+    const classification_id = req.params.classificationId;
+    const data = await invModel.getInventoryByClassificationId(
+      classification_id
+    );
 
-  const className = data[0].classification_name
-  
-  res.render("./inventory/classification", {
-    title: className +" Vehicles" ,
-    nav,
-    grid,
-  });
+
+
+    const grid = await utilities.buildClassificationGrid(data);
+    let nav = await utilities.getNav();
+
+    // Check if data is empty or doesn't have any entries
+    if (data && data.length > 0) {
+      const className = data[0].classification_name;
+
+      res.render("./inventory/classification", {
+        title: className + " Vehicles",
+        nav,
+        grid,
+      });
+    } else {
+      // Handle the case where no data was returned
+      res.status(404)
+        .render("./errors/error", {
+          title: "Missing inventory for classification",
+          nav,
+          message: "No vehicles found for this classification.",
+        });
+    }
+  } catch (error) {
+    console.error("Error building Classification:", error);
+    next(error); // Pass the error to the next middleware (e.g., an errorhandler)
+  }
 };
 
 // /* ***************************
@@ -50,12 +71,17 @@ invCont.buildByInvId = async function (req, res, next) {
 //  *  Build management view
 //  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
-  let nav = await utilities.getNav();
-  res.render("./inventory/management", {
-    title: "Management",
-    nav,
-    errors: null,
-  });
+  try {
+    let nav = await utilities.getNav();
+    res.render("./inventory/management", {
+      title: "Management",
+      nav,
+      errors: null,
+    });
+  } catch (error) {
+    console.error("Error building management view:", error);
+    next(error); // Pass the error to the next middleware (e.g., an errorhandler)
+  }
 };
 
 // /* ***************************
@@ -125,7 +151,7 @@ invCont.buildAddInv = async function (req, res, next) {
 //  * Process add new Inventory
 //  * ************************** */
 invCont.addInventory = async function (req, res, next) {
-  console.log("billy3")
+  console.log("billy3");
   const {
     classification_id,
     inv_make,
@@ -140,7 +166,7 @@ invCont.addInventory = async function (req, res, next) {
   } = req.body;
 
   // adds inventory item to database
-  const invResult = await manModel.addInvItems(    
+  const invResult = await manModel.addInvItems(
     classification_id,
     inv_make,
     inv_model,
@@ -150,7 +176,8 @@ invCont.addInventory = async function (req, res, next) {
     inv_thumbnail,
     inv_price,
     inv_miles,
-    inv_color,);
+    inv_color
+  );
 
   let nav = await utilities.getNav();
   if (invResult) {
