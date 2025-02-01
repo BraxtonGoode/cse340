@@ -1,0 +1,21 @@
+<!-- management View wrapped in section -->
+<section class="management_section">
+  <!-- Content Heading -->
+  <% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <!-- Message Block -->
+  <%- messages() %>
+  <!-- display errors -->
+  <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+  <ul class="managementLinks">
+    <li><a href="/inv/add-classification">Add new classification</a></li>
+    <li><a href="/inv/add-inventory">Add new inventory</a></li>
+  </ul>
+</section>

@@ -1,0 +1,36 @@
+<!-- Classification View wrapped in section -->
+<section class="management_section">
+  <!-- Content Heading -->
+  <% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <!-- Message Block -->
+  <%- messages() %>
+  <!-- display errors -->
+  <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+  <form class="addClassForm" action="/inv/add-classification" method="post">
+    <p>All fields are required!</p>
+    <fieldset id="classFieldset">
+      <p
+        >Name must be alphabetic characters with no spaces!</p
+      >
+      <label for="classification_name">New Classification Name: </label>
+      <input
+        type="text"
+        name="classification_name"
+        id="classification_name"
+        required
+        pattern="^[A-Za-z]+$"
+        title="Name must be in alphabetic characters with no spaces."
+        value="<%= locals.classification_name %>"
+      />
+    </fieldset>
+    <input type="submit" value="Add Classification"/>
+  </form>
+</section>

@@ -17,6 +17,9 @@
   --nav_button_text:white;
   --hero_card_background:rgb(250, 248, 248, 0.7);
   --bold_text: 700;
+  --invalid_response:rgb(224, 151, 151);
+  --valid_response:rgb(186, 236, 173);
+  --before_response:transparent;
 }
 /* Base items */
 html {
@@ -291,6 +294,15 @@ color: black;
 #login_Fieldset , #register_Fieldset{
   border: none;
 }
+input:required:invalid:not(:focus) {
+  background-color: var(--before_response);
+}
+input:required:invalid, input:focus:invalid {
+  background-color: var(--invalid_response);
+}
+input:required:valid {
+  background-color: var(--valid_response);
+}
 input[type=submit] {
   margin: 10px;
   display: block;
@@ -309,6 +321,7 @@ input[type=submit] {
   width: 7em;
   text-align: center;
 }
+
 /* Error 404 & lost content*/
 .error_Section {
   display: flex;
