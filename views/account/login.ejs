@@ -8,12 +8,12 @@
   <%- messages() %>
   <!-- if additional errors are needed -->
   <% if (errors) { %>
-    <ul class="notice">
-      <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-    <% } %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
   <!-- Message Block -->
   <form class="login_Form" action="/account/login" method="post">
     <fieldset id="login_Fieldset">

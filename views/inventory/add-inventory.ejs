@@ -21,10 +21,10 @@
             <%- classList %>
 
             <label for="inv_make">Make:</label>
-            <input type="text" name="inv_make" id="inv_make" required pattern="^[A-Za-z]+$" title="Type vehicle's make only alphabetic characters only." value="<%= locals.inv_description %>">
+            <input type="text" name="inv_make" id="inv_make" required pattern="^[A-Za-z ]+$" title="Type vehicle's make only alphabetic characters only." value="<%= locals.inv_description %>">
 
             <label for="inv_model">Model:</label>
-            <input type="text" name="inv_model" id="inv_model" required pattern="^[A-Za-z]+$" title="Type vehicle's model only alphabetic characters only." value="<%= locals.inv_description %>">
+            <input type="text" name="inv_model" id="inv_model" required pattern="^[A-Za-z ]+$" title="Type vehicle's model only alphabetic characters only." value="<%= locals.inv_description %>">
 
             <label for="inv_description">Description: </label>
             <textarea name="inv_description" id="inv_description" minlength="1" maxlength="100" rows="5" title="Type vehicle's description." required><%= locals.inv_description %></textarea>

@@ -1,0 +1,19 @@
+<!-- Learning activity: Account Management -->
+<!-- Account Management section -->
+<section class="accManagement_Section">
+    <% if (title) { %>
+    <h1 id="accManagement_h1"><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    <!-- incase of a Flash message -->
+    <%- messages() %>
+    <!-- if additional errors are needed -->
+    <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+    <!-- Main Content -->
+     <p>You are Logged in</p>
+</section>
