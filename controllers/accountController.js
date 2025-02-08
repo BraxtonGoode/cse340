@@ -201,6 +201,7 @@ async function processUpdateAcc(req, res, next) {
       account_firstname,
       account_lastname,
       account_email,
+      account_id
     })
   } else {
     // error flash message
@@ -212,6 +213,7 @@ async function processUpdateAcc(req, res, next) {
       account_firstname: account_firstname,
       account_lastname: account_lastname,
       account_email: account_email,
+      account_id: account_id,
     })
   }
   } catch (error) {
