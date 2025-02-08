@@ -1,0 +1,74 @@
+<!-- Edit Inventory View wrapped in section -->
+<section class="management_section">
+  <!-- Content Heading -->
+  <% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <!-- Message Block -->
+  <%- messages() %>
+  <!-- display errors -->
+  <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+  <form class="deleteInvForm" action="/inv/delete" method="post">
+    <p>Confirm Deletion - The delete is permanent.</p>
+    <fieldset id="invFieldset">
+      <label for="inv_make">Make:</label>
+      <input
+        type="text"
+        name="inv_make"
+        id="inv_make"
+        required
+        pattern="^[A-Za-z ]+$"
+        title="Type vehicle's make only alphabetic characters only."
+        value="<%= locals.inv_make %>"
+        readonly
+      />
+
+      <label for="inv_model">Model:</label>
+      <input
+        type="text"
+        name="inv_model"
+        id="inv_model"
+        required
+        pattern="^[A-Za-z ]+$"
+        title="Type vehicle's model only alphabetic characters only."
+        value="<%= locals.inv_model %>"
+        readonly
+      />
+
+      <label for="inv_price">Price:</label>
+      <input
+        type="text"
+        name="inv_price"
+        id="inv_price"
+        pattern="^\d+$"
+        title="Type vehicle's price numeric value only no comma."
+        required
+        value="<%= locals.inv_price %>"
+        readonly
+      />
+
+      <label for="inv_year">Year:</label>
+      <input
+        type="text"
+        name="inv_year"
+        id="inv_year"
+        pattern="^\d{4}$"
+        title="Type vehicle's year numeric value only no comma."
+        required
+        value="<%= locals.inv_year %>"
+        readonly
+      />
+    </fieldset>
+<input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+
+    <input type="submit" name="submit" value="Delete" />
+  </form>
+</section>

@@ -1,0 +1,81 @@
+<!-- week 5 asignment task 4 -->
+<!-- Account Management section -->
+<section class="updateAcc_Section">
+    <% if (title) { %>
+    <h1 id="updateAcc_h1"><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    <!-- incase of a Flash message -->
+    <%- messages() %>
+    <!-- if additional errors are needed -->
+    <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+    <!-- Main Content -->
+     <div id="updateForm">
+        <form class="updateAcc_Form" action="/account/update_Acc" method="post" >
+            <fieldset id="updateAcc_Fieldset">
+            <label for="account_firstname">First Name: </label> <br />
+            <input
+                type="text"
+                name="account_firstname"
+                id="account_firstname"
+                required
+                value="<%= locals.account_firstname %>"
+            />
+            <br />
+            <label for="account_lastname">Last Name:</label> <br />
+            <input
+                type="text"
+                name="account_lastname"
+                id="account_lastname"
+                required
+                value="<%= locals.account_lastname %>"
+            />
+            <br />
+            <label for="account_email">Email Address: </label><br />
+            <input
+                type="email"
+                name="account_email"
+                id="account_email"
+                required
+                placeholder="Enter a valid email address"
+                value="<%= locals.account_email %>"
+            />
+            <br />
+            </fieldset>
+            <input type="hidden" name="account_id"
+            <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+            <% } %>>
+            <input type="submit" value="Update Account" id="button" disabled/>
+        </form>
+    </div>
+    <div>
+        <form class="changePass_Form" action="/account/newPass" method="post">
+            <fieldset id="changePass_Fieldset">
+                <label for="account_password">New Password: </label><br />
+                <input
+                  type="password"
+                  name="account_password"
+                  id="account_password"
+                  required
+                  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                  title="Password must be at least 12 characters, contain at least one capital letter, one number, and one special character."
+                /><br />
+                <div>
+                  Password must be at least 12 characters, <br />contain at least one
+                  capital letter, <br />one number, and one special character.
+                </div>
+
+                <input type="hidden" name="account_id"
+                <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+                <% } %>>
+                <span id="passButton">Show Password</span>
+            </fieldset>
+                <input type="submit" value="Change Password"/>
+        </form>
+    </div>
+</section>

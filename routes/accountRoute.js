@@ -11,6 +11,10 @@ router.get("/login", utilities.handleErrors(accController.buildLogin));
 router.get("/register", utilities.handleErrors(accController.buildRegister));
 // Route to build account View
 router.get("/", utilities.checkLogin, utilities.handleErrors(accController.buildAccountManagement))
+// Route to build ccount update View
+router.get("/edit/:account_id", utilities.handleErrors(accController.buildUpdateAcc));
+// Route to logout
+router.get("/logout", utilities.handleErrors(accController.logout))
 
 // Route to POST registration information to database
 router.post(
@@ -26,4 +30,20 @@ router.post(
   regValidate.checkLogData,
   utilities.handleErrors(accController.accountLogin)
 );
+
+// Process the update Account info
+router.post(
+  "/update_Acc",
+  regValidate.updateAccRules(),
+  regValidate.checkUpdateAccData,
+  utilities.handleErrors(accController.processUpdateAcc)
+)
+
+// Process the change password
+router.post(
+  "/newPass",
+  regValidate.newPassRules(),
+  regValidate.newPassData,
+  utilities.handleErrors(accController.processNewPass)
+)
 module.exports = router;

@@ -120,4 +120,119 @@ validate.loginRules = () => {
     }
     next()
   }
+
+  /*  **********************************
+  *  Update Account Data Validation Rules
+  * ********************************* */
+validate.updateAccRules = () => {
+  return [
+    // firstname is required and must be string
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."), // on error this message is sent.
+
+    // lastname is required and must be string
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."), // on error this message is sent.
+
+    // valid email is required and cannot already exist in the database
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required."),
+  ]
+}
+
+  /* ******************************
+ * Check data and return errors then continue with account management
+ * ***************************** */
+  validate.checkUpdateAccData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email, account_id } = req.body
+    const account = await accountModel.getAccountById(account_id)
+
+    let errors = []
+    if (account_email != account.account_email) {
+      const emailExists = await accountModel.checkExistingEmail(account_email)
+      if (emailExists){
+        errors.push("Email exists. Please log in or use different email")
+      }
+    }
+
+    errors = validationResult(req)
+    console.log(errors)
+    if (!errors.isEmpty()) {
+      res.render("./account/edit", {
+        errors,
+        title: "Edit Account Information",
+        nav,
+        account_firstname,
+        account_lastname,
+        account_email,
+        account_id,
+      })
+
+      return
+    }
+    next()
+  }
+
+    /*  **********************************
+  *  New Password Rules
+  * ********************************* */
+validate.newPassRules = () => {
+  return [
+        // password is required and must be a strong password
+        body("account_password")
+        .trim()
+        .notEmpty()
+        .isStrongPassword({
+          minLength: 12,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements."),
+  ]
+}
+  /* ******************************
+ * Check data and return errors then continue with account management
+ * ***************************** */
+  validate.newPassData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email, account_id } = req.body
+    const account = await accountModel.getAccountById(account_id)
+
+    let errors = []
+    if (account_email != account.account_email) {
+      const emailExists = await accountModel.checkExistingEmail(account_email)
+      if (emailExists){
+        errors.push("Email exists. Please log in or use different email")
+      }
+    }
+
+    errors = validationResult(req)
+    console.log(errors)
+    if (!errors.isEmpty()) {
+      res.render("./account/edit", {
+        errors,
+        title: "Edit Account Information",
+        nav,
+        account_firstname,
+        account_lastname,
+        account_email,
+        account_id,
+      })
+
+      return
+    }
+    next()
+  }
   module.exports = validate

@@ -163,13 +163,32 @@ Util.checkJWTToken = (req, res, next) => {
 /* ****************************************
  *  Check Login
  * ************************************ */
-Util.checkLogin = (req,res,next)  =>{
+Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
-    next()
+    next();
   } else {
-    req.flash("notice", "Please log in")
-    return res.redirect("/account/login")
+    req.flash("notice", "Please log in");
+    return res.redirect("/account/login");
   }
-}
+};
 
-module.exports = Util;
+/* ****************************************
+ *  Check Authorization
+ * ************************************ */
+Util.checkAuthorization = (req, res, next) => {
+  if (res.locals.loggedin) {
+    const myAccount = res.locals.accountData
+    console.log(res.locals.accountData)
+    if(myAccount.account_type == "Admin" || myAccount.account_type == "Employee"){
+      next()
+    }else {
+      req.flash("notice", "Please log in");
+      return res.redirect("/account/login");
+    }
+  } else {
+    req.flash("notice", "Please log in");
+    return res.redirect("/account/login");
+  }
+};
+
+module.exports = Util

@@ -280,4 +280,42 @@ validate.checkUpdateData = async (req, res, next) => {
   }
   next();
 };
+
+/*  **********************************
+ *  delete inventory Validation Rules
+ * ********************************* */
+validate.deleteInvRules = () => {
+  return [
+    // valid Inv id is required
+    body("inv_id")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .isInt()
+      .withMessage("A Valid inv Id  is required."),
+  ];
+};
+
+/* ******************************
+ * Check data and return errors for deleting inventory
+ * ***************************** */
+validate.checkDeleteData = async (req, res, next) => {
+  const {
+    inv_id
+  } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("./inventory/delete-confirm", {
+      errors,
+      title: "Delete",
+      nav,
+      inv_id,
+    });
+    return;
+  }
+  next();
+};
 module.exports = validate;

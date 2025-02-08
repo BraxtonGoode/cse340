@@ -18,7 +18,7 @@
         <p>All fields are required!</p>
         <fieldset id="invFieldset">
             <label for="classification_id">Classification:</label>
-            <%- classList %>
+            <%- classificationSelect %>
 
             <label for="inv_make">Make:</label>
             <input type="text" name="inv_make" id="inv_make" required pattern="^[A-Za-z ]+$" title="Type vehicle's make only alphabetic characters only." value="<%= locals.inv_description %>">
@@ -46,7 +46,7 @@
             <input type="text" name="inv_miles" id="inv_miles" pattern="^\d+$" title="Type vehicle's miles numeric value only no comma." required value="<%= locals.inv_miles %>">
 
             <label for="inv_color">Color:</label>
-            <input type="text" name="inv_color" id="inv_color" required pattern="^[A-Za-z]+$" title="Type vehicle's color alphabetic characters only" value="<%= locals.inv_color %>">
+            <input type="text" name="inv_color" id="inv_color" required pattern="^[A-Za-z ]+$" title="Type vehicle's color alphabetic characters only" value="<%= locals.inv_color %>">
 
         </fieldset>
         <input type="submit" value="Add Vehicle"/>

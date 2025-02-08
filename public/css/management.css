@@ -1,4 +1,4 @@
-/* root */
+ /* root */
 :root {
     --main_color: rgb(42, 42, 110);
     --accent_color:#551688;
@@ -25,6 +25,15 @@
 .managementLinks li{
     padding: 10px;
 }
+.manageInventory {
+    text-align: center;
+    margin-top: 5px;
+}
+#inventoryDisplay {
+    width: 100%;
+}
+
+
 /* Management add Classification page */
 .addClassForm {
     padding: 10px;
@@ -41,7 +50,7 @@
     margin: 10px;
 }
 /* Management add inventory page */
-.addInvForm {
+ .addInvForm {
     padding: 10px;
     min-width: fit-content;
 }
@@ -55,9 +64,60 @@
 #invFieldset label, #invFieldset input, #invFieldset select{
     display: block;
     min-width: 210px;
-    margin: 10px;
+    margin: 10px auto;
     text-align: center;
 }
 #invFieldset textarea {
     min-width: 250px;
+} 
+/* Account management view */
+.accManagement_Section {
+    grid-row: 1/3;
+    grid-column: 1/3;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.accMainContent {
+    margin: 10px 10px;
+}
+.accMainContent div {
+    margin-bottom: 10px;
+}
+/* Update account information */
+.updateAcc_Section{
+    grid-row: 1/3;
+    grid-column: 1/3;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.updateAcc_Form {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 60px;
+    justify-content: center;
+    align-items: center;
+}
+#updateAcc_Fieldset{
+    padding: 20px;
+    margin-top: 20px;
+}
+.updateAcc_Form input[type="text"],
+.updateAcc_Form input[type="email"],
+.updateAcc_Form input[type="password"] {
+    padding: 8px;
+}
+
+/* Change password information */
+.changePass_Form {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 60px;
+    justify-content: center;
+    align-items: center;
+}
+#changePass_Fieldset{
+    padding: 20px;
+    margin-top: 20px;
 }
