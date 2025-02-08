@@ -141,10 +141,15 @@ async function accountLogin(req, res) {
  * *************************************** */
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav();
+
+  const account = res.locals.accountData
+  console.log(account.account_id)
   res.render("account/accountManagement", {
     title: "Account Management",
     nav,
     errors: null,
+    account_id: account.account_id
+
   });
 }
 
@@ -154,17 +159,19 @@ async function buildAccountManagement(req, res, next) {
 async function buildUpdateAcc(req, res, next) {
   let nav = await utilities.getNav();
   let account_id = parseInt(req.params.account_id)
-  let Data = await accountModel.getAccountById(account_id)
-  console.log(Data)
+  let account = res.locals.accountData
+  console.log(account)
+  // let Data = await accountModel.getAccountById(account_id)
+  // console.log(Data)
   res.render("account/edit", {
     title: "Update Account",
     nav,
     errors: null,
     account_id: account_id,
-    account_firstname: Data.account_firstname,
-    account_lastname: Data.account_lastname,
-    account_email: Data.account_email,
-    account_password: Data.account_password,
+    account_firstname: account.account_firstname,
+    account_lastname: account.account_lastname,
+    account_email: account.account_email,
+    account_password: account.account_password,
   });
 }
 
@@ -188,6 +195,7 @@ async function processUpdateAcc(req, res, next) {
     res.clearCookie("jwt")
     // get account information
     const accountData = await accountModel.getAccountById(account_id)
+
 
     // use .env secret key to sign in, expires with in one hour
     const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
