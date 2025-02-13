@@ -404,10 +404,8 @@ invCont.addReview = async function (req, res, next) {
         review_text,
         inv_id,
         account_id,
-        review_date,
       } = req.body;
   
-      const reviewDateInteger = review_date ? new Date(review_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]; // Default to today's date if undefined
   
       const revisedACC_id = parseInt(account_id);
       const revisedINV_id = parseInt(inv_id);
@@ -418,22 +416,52 @@ invCont.addReview = async function (req, res, next) {
         review_text,
         revisedINV_id,
         revisedACC_id,
-        reviewDateInteger
       );
   
       console.log('Review added:', revResult);
   
       // Get the updated vehicle data and reviews
       const nav = await utilities.getNav();
-
+          const data = await invModel.getVehicleItemsByInvId(revisedINV_id);
+          const reviewerData = await reviewModel.getReviewsByInvId(revisedINV_id);
+          const card = await utilities.buildVehicleCard(data);
+          const reviews = await reviewFinal.buildReviewSection(reviewerData);
+          const invName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`;
   
       // Re-render the current page with the updated data (no redirection)
       if (revResult) {
-        res.redirect(req.get('referer'));
+
+        req.flash(
+          "notice",
+          `Congratulations, You have added a new Review.`
+        );
+        res.render("./inventory/detail", {
+          errors: null,
+          title: invName,
+          nav,
+          card,
+          reviews,
+          inv_id,
+          review_rating: rating,
+          review_text,
+        });
         console.log("Review successfully posted");
-      } else {
-        console.log("Review successfully posted");
-        res.redirect(req.get('referer'));
+      } else {    
+        req.flash(
+          "notice",
+          `Sorry, your review failed please try again.`
+        );
+        res.render("./inventory/detail", {
+          errors: null,
+          title: invName,
+          nav,
+          card,
+          reviews,
+          inv_id,
+          review_rating: rating,
+          review_text,
+        });
+
       }
     } catch (error) {
       console.error("Error adding review:", error);

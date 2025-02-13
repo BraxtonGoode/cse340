@@ -113,48 +113,53 @@ Util.addReviewerRules = () => {
  * Check Reviewer data and return errors or continue on
  * ***************************** */
 Util.checkReviewerData = async (req, res, next) => {
-  const { rating, review_text, inv_id, account_id } = req.body;
+  try {
+    const { rating, review_text, inv_id, account_id } = req.body;
 
-  console.log('Rating:', rating);
-  console.log('Review text:', review_text);
-  console.log('Inventory ID:', inv_id);
-  console.log('Account ID:', account_id);
-
-  // Error handling
-  let errors = [];
-  errors = validationResult(req);
+    console.log('Rating:', rating);
+    console.log('Review text:', review_text);
+    console.log('Inventory ID:', inv_id);
+    console.log('Account ID:', account_id);
   
-  if (!errors.isEmpty()) {
-    const revRating = parseInt(rating);
-    const invID = parseInt(inv_id);
-    const accountID = parseInt(account_id);
-
-    // Model & data creation
-    await reviewModel.addReview({
-      revRating,
-      review_text, 
-      invID,
-      accountID,
-    });
-
-    const data = await invModel.getVehicleItemsByInvId(invID);
-    const reviewerData = await reviewModel.getReviewsByInvId(invID);
-    const card = await utilities.buildVehicleCard(data);
-    const reviews = await Util.buildReviewSection(reviewerData);
-
-    let nav = await utilities.getNav();
-    const invName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`;
-    res.render("./inventory/detail", {
-      errors: null,
-      title: invName,
-      nav,
-      card,
-      reviews,
-      inv_id,
-      review_rating: rating,
-      review_text,
-    });
-    return;
+    // Error handling
+    let errors = [];
+    errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+      const revRating = parseInt(rating);
+      const invID = parseInt(inv_id);
+      const accountID = parseInt(account_id);
+  
+      // Model & data creation
+      await reviewModel.addReview({
+        revRating,
+        review_text, 
+        invID,
+        accountID,
+      });
+  
+      const data = await invModel.getVehicleItemsByInvId(invID);
+      const reviewerData = await reviewModel.getReviewsByInvId(invID);
+      const card = await utilities.buildVehicleCard(data);
+      const reviews = await Util.buildReviewSection(reviewerData);
+  
+      let nav = await utilities.getNav();
+      const invName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`;
+      res.render("./inventory/detail", {
+        errors: null,
+        title: invName,
+        nav,
+        card,
+        reviews,
+        inv_id,
+        review_rating: rating,
+        review_text,
+      });
+      return;
+    }
+  } catch (error) {
+    console.error;
+    next(error)
   }
 
   next();
