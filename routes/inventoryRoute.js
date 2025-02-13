@@ -5,8 +5,12 @@ const invController = require("../controllers/invController");
 const invValidate = require("../utilities/add-inv-validation");
 const manValidate = require("../utilities/add-class-validation");
 const utilities = require("../utilities");
-
 const manModel = require("../models/management-model");
+
+// final project - reviewer validation js
+const reviewerValidate = require("../utilities/review-final");
+
+
 
 /* ***********************
  * Get Statements
@@ -71,6 +75,13 @@ router.post(
   invValidate.deleteInvRules(),
   invValidate.checkDeleteData,
   utilities.handleErrors(invController.deleteInventoryItem)
+);
+// Route to post new Inventory item
+router.post(
+  "/new-Review",
+  reviewerValidate.addReviewerRules(),
+  reviewerValidate.checkReviewerData,
+  utilities.handleErrors(invController.addReview)
 );
 
 module.exports = router;

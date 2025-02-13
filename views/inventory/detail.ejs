@@ -10,4 +10,62 @@
     <%# messages() %>
     <!-- Vehicle Content -->
     <%- card %>
+
+    <!-- Final project Review section -->
+    <%- reviews %>
+
+    <% if (locals.loggedin) { %>
+      <% const account = locals.accountData %>
+  
+
+        <form action="/inv/new-Review" method="post" id="newReview">
+          <fieldset>
+            <!-- client Name -->
+            <label for="reviewerName">Client Name:</label><br>
+            <input type="text" name="reviewerName" id="reviewerName" readonly value="<%= account.account_firstname[0] %>.<%= account.account_lastname%>"><br>
+            
+            <!-- Star Rating System -->
+            <span class="rating-label">Rating:</span><br>
+
+            <div class="star-rating">
+
+              <!-- Create 5 stars using radio buttons -->
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1" class="star">&#9733;</label>
+
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2" class="star">&#9733;</label>
+
+              
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3" class="star">&#9733;</label>
+
+              
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4" class="star">&#9733;</label>
+
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5" class="star">&#9733;</label>         
+            </div>
+
+
+            <!-- review text -->
+            <label for="reviewText">Review text:</label><br>
+            <textarea name="review_text" id="reviewText" placeholder="Enter your review here" required rows="5" maxlength="300" spellcheck="true"></textarea>
+            <input type="submit" value="Submit Review">
+            <input type="hidden" name="inv_id"
+            <% if(locals.inv_id) { %> value="<%= parseInt(locals.inv_id) %>"
+            <% } %>>
+            <input type="hidden" name="account_id"
+            <% if(account.account_id) { %> value="<%= parseInt(account.account_id) %>"
+            <% } %>>
+          </fieldset>
+          
+        </form>
+
+    <% } else { %>
+        <h3 id="nonLoggedComment">If you would like to leave a review you must be <a href="/account/login">logged in</a>!</h3>
+
+    <% } %>
+
     </section>

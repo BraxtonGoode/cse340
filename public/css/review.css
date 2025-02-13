@@ -1,0 +1,61 @@
+/* Final project styling */
+
+
+/* star review styling */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; 
+    justify-content: space-evenly;
+  }
+  
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+  
+  .star-rating label {
+    font-size: 30px; 
+    color: gray; 
+    cursor: pointer;
+  }
+  
+  .star-rating input[type="radio"]:checked ~ label {
+    color: gold; 
+    background-color: black;
+  }
+  /* Comment section */
+.reviewSection {
+    margin-top: 20px ;
+    margin-bottom: 20px ;
+}
+.reviewSection div {
+    margin: 10px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+.reviewSection div h4{
+    text-decoration: underline;
+}
+.reviewSection div p{
+    margin-top: 5px;
+}
+#noReviews {
+    margin-top: 20px ;
+    margin-bottom: 20px ;
+}
+
+/* leave a review section (NOT LOGED IN VERSION) */
+#nonLoggedComment{
+    margin-bottom: 10px;
+}
+/* leave a review section (LOGED IN VERSION) */
+#newReview {
+    margin: 10px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+#reviewerName {
+    text-align: center;
+}
+#reviewText {
+    width: 300px;
+}

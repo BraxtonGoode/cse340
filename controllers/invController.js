@@ -3,6 +3,11 @@ const invModel = require("../models/inventory-model");
 const manModel = require("../models/management-model");
 const utilities = require("../utilities/");
 
+
+// Final section assignment - 
+const reviewModel = require("../models/review-model");
+const reviewFinal = require('../utilities/review-final');
+
 const invCont = {};
 
 /* ***************************
@@ -46,17 +51,27 @@ invCont.buildByClassificationId = async function (req, res, next) {
 //  * ************************** */
 invCont.buildByInvId = async function (req, res, next) {
   try {
-    const inv_id = req.params.invId;
+    const inv_id = parseInt(req.params.invId);
     const data = await invModel.getVehicleItemsByInvId(inv_id);
     const card = await utilities.buildVehicleCard(data);
+
     const nav = await utilities.getNav();
     const vYear = data[0].inv_year;
     const vMake = data[0].inv_make;
     const vModel = data[0].inv_model;
+
+    // Final section assignment - 
+    // grabbing models and builind review section
+    const reviewData = await reviewModel.getReviewsByInvId(inv_id);
+    const reviews = await reviewFinal.buildReviewSection(reviewData)
+
+
     res.render("./inventory/detail", {
       title: `${vYear} ${vMake} ${vModel}`,
       nav,
       card,
+      reviews,
+      inv_id,
     });
   } catch (error) {
     console.error("Error fetching inventory:", error);
@@ -378,5 +393,53 @@ invCont.deleteInventoryItem = async function (req, res, next) {
     res.redirect("/inv/delete/inv_id");
   }
 };
+
+// /* ***************************
+//  * Process add new Review
+//  * ************************** */
+invCont.addReview = async function (req, res, next) {
+    try {
+      const {
+        rating,
+        review_text,
+        inv_id,
+        account_id,
+        review_date,
+      } = req.body;
+  
+      const reviewDateInteger = review_date ? new Date(review_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]; // Default to today's date if undefined
+  
+      const revisedACC_id = parseInt(account_id);
+      const revisedINV_id = parseInt(inv_id);
+  
+      // Add review to the database
+      const revResult = await reviewModel.addReview(
+        rating,
+        review_text,
+        revisedINV_id,
+        revisedACC_id,
+        reviewDateInteger
+      );
+  
+      console.log('Review added:', revResult);
+  
+      // Get the updated vehicle data and reviews
+      const nav = await utilities.getNav();
+
+  
+      // Re-render the current page with the updated data (no redirection)
+      if (revResult) {
+        res.redirect(req.get('referer'));
+        console.log("Review successfully posted");
+      } else {
+        console.log("Review successfully posted");
+        res.redirect(req.get('referer'));
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
+      next(error); // Pass the error to the next middleware
+    }
+  };
+  
 
 module.exports = invCont;

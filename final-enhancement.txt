@@ -1,0 +1,30 @@
+1. inventory / detail view
+    -average review section 
+        -the average review rates this vehicle 3/5 stars
+        -if no ratings
+            -message saying "car has not been user rated yet"
+
+    -create review section to go underneath
+        -title saying vehicle reviews
+        -latest comment on top and furthest below
+        -star rating on left
+        -Comment on right of star
+        -if no comments
+            -have a note saying you can be first commenter.
+
+    -Below review section have a form to create a new comment
+        -if you are not logged in 
+            - ask the user to login if they want to leave a review
+
+        -form will have screenName and Review itself and submit review button
+            -screen name is firstletter of first name and whole last name(not changeable)
+            -Review comment have both client and server side validation
+                -not empty, trim, less than 100 words, longer than 1 letter
+            -submit Review button - push thorough POST on invController
+            -upon rubmission refreshes page and new review can be seen
+
+
+
+--------------------------------------------
+path to make this work
+detail View => inv route => inventoryController => review Model => inventoryController => detail View
