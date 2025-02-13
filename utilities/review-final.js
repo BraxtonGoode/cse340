@@ -28,10 +28,8 @@ const Util = {};
       
       for (let i = 0; i < 5; i++) {
         if (i < rating) {
-          // Filled star (white color)
           stars += `<span style="color: ${filledStarColor}; font-size: 30px;">&#9733;</span>`;
         } else {
-          // Empty star (grey color)
           stars += `<span style="color: ${emptyStarColor}; font-size: 30px;">&#9734;</span>`;
         }
       }
@@ -40,7 +38,7 @@ const Util = {};
       reviews += `<p>The average rating for this car is ${stars}`
       reviewData.forEach((r) => {
         let starRating = '';
-        const currentrating = r.review_rating; // Assuming the rating is stored in `r.review_rating`
+        const currentrating = r.review_rating; 
         
         for (let i = 1; i <= 5; i++) {
           if (i <= currentrating) {
@@ -115,7 +113,6 @@ Util.addReviewerRules = () => {
  * Check Reviewer data and return errors or continue on
  * ***************************** */
 Util.checkReviewerData = async (req, res, next) => {
-  // Directly destructure from req.body
   const { rating, review_text, inv_id, account_id } = req.body;
 
   console.log('Rating:', rating);
